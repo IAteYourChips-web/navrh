@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace with your production domain before deploy.
-Sitemap: https://CHANGE-ME.example/sitemap.xml
+Sitemap: https://portintel.vercel.app/sitemap.xml

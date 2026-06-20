@@ -59,8 +59,9 @@ These are everywhere the source material didn't provide a fact. All live in
 5. **Talk / event links** — each `work[].link` (recording, slides, or event page).
 6. **Canonical title + URL of the LinkedIn essay** — `work` essay item.
 7. **Prague Cyber Security Conference exact date** — `work` featured item `date`.
-8. **Production domain** — replace `https://CHANGE-ME.example` in `index.html`
-   (canonical + OG/Twitter URLs), `public/robots.txt`, and `public/sitemap.xml`.
+8. **Production domain** — set to `https://portintel.vercel.app` (live on Vercel)
+   in `index.html` (canonical + OG/Twitter), `public/robots.txt`, and
+   `public/sitemap.xml`. Update these if you move to a custom domain.
 
 ## Changing colors / fonts
 

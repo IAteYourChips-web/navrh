@@ -25,3 +25,5 @@ lh.json
 *.njsproj
 *.sln
 *.sw?
+
+.vercel

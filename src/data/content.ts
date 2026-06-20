@@ -51,7 +51,7 @@ export interface SiteMeta {
 }
 
 export const site: SiteMeta = {
-  domain: '[PLACEHOLDER: production domain, e.g. https://petrhummel.cz]',
+  domain: 'https://portintel.vercel.app',
   name: 'Petr Hummel',
   credential: 'Ing.',
   tagline: 'Cyber Resilience & AI Safety — From Engineering to Strategy',
