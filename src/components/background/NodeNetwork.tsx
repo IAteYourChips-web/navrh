@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { NODES, EDGES } from './nodeTopology'
 
 /**
  * Hero background — a hand-seeded, deterministic node network rendered as a
@@ -9,31 +10,6 @@ import { motion, useReducedMotion } from 'framer-motion'
  * Decorative: aria-hidden, fixed geometry (no layout shift), dual-gated by
  * prefers-reduced-motion via Framer's useReducedMotion + the global CSS rule.
  */
-
-// Right-biased coordinates in a 1000 x 620 viewBox (slice-fit to the hero).
-const NODES: ReadonlyArray<readonly [number, number]> = [
-  [560, 120], // 0
-  [664, 74], // 1
-  [770, 150], // 2
-  [882, 92], // 3
-  [952, 206], // 4
-  [620, 232], // 5
-  [722, 300], // 6
-  [842, 262], // 7
-  [930, 344], // 8
-  [582, 384], // 9
-  [690, 444], // 10
-  [800, 412], // 11
-  [900, 482], // 12
-  [662, 540], // 13
-  [792, 560], // 14
-]
-
-const EDGES: ReadonlyArray<readonly [number, number]> = [
-  [0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [4, 8],
-  [5, 9], [6, 10], [9, 10], [7, 11], [10, 11], [8, 12], [11, 12], [9, 13],
-  [13, 14], [14, 12], [1, 5],
-]
 
 // Nodes that breathe, with staggered loop timings.
 const FLICKER: ReadonlyArray<{ i: number; dur: number; delay: number }> = [
