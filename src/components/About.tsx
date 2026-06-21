@@ -1,54 +1,25 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Section } from './layout/Section'
 import { Reveal, RevealGroup, RevealItem } from './ui/Reveal'
-import { affiliations, highlights, isPlaceholder, profileMeta, site } from '../data/content'
-
-function OperatorCard() {
-  return (
-    <div className="panel p-6">
-      {/* Portrait slot — replace with a real photo when available. */}
-      <div className="relative mb-6 flex aspect-[4/5] items-center justify-center overflow-hidden rounded-md border border-line bg-surface">
-        <div
-          className="absolute inset-0 opacity-60"
-          style={{ background: 'radial-gradient(80% 60% at 50% 0%, rgba(91,140,255,0.10), transparent 70%)' }}
-        />
-        <span className="font-display text-6xl font-medium tracking-tight text-ink-faint">PH</span>
-        <span className="absolute bottom-3 left-0 right-0 text-center font-mono text-2xs uppercase tracking-eyebrow text-ink-faint">
-          [Placeholder: portrait]
-        </span>
-      </div>
-
-      <dl className="space-y-3">
-        {profileMeta.map((row) => (
-          <div key={row.key} className="flex items-baseline justify-between gap-4 border-t border-line pt-3 first:border-t-0 first:pt-0">
-            <dt className="font-mono text-2xs uppercase tracking-eyebrow text-ink-faint">
-              {row.key}
-            </dt>
-            <dd className="text-right font-mono text-xs tabular-nums text-ink-muted">
-              {row.value}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  )
-}
+import { affiliations, highlights, isPlaceholder, site } from '../data/content'
 
 export function About() {
+  const [deck, ...rest] = site.longBio
+
   return (
-    <Section
-      id="about"
-      eyebrow="FOCUS: AI SAFETY · CYBER RESILIENCE"
-      title="I treat security as more than a technical discipline."
-    >
-      <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+    <Section id="about" index="01" kicker="About">
+      <div className="grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-12">
+        {/* Standfirst / deck */}
         <Reveal className="lg:col-span-5">
-          <OperatorCard />
+          <p className="text-balance font-display font-medium leading-[1.32] text-ink [font-size:clamp(1.4rem,2.1vw,1.6rem)]">
+            {deck}
+          </p>
         </Reveal>
 
+        {/* Body + stats */}
         <div className="lg:col-span-7">
           <RevealGroup className="space-y-5">
-            {site.longBio.map((para, i) => (
+            {rest.map((para, i) => (
               <RevealItem key={i}>
                 <p className="max-w-prose text-pretty text-lg leading-relaxed text-ink-muted">
                   {para}
@@ -57,37 +28,35 @@ export function About() {
             ))}
           </RevealGroup>
 
-          <RevealGroup className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+          <RevealGroup className="mt-14 grid grid-cols-1 gap-10 border-t border-line pt-10 sm:grid-cols-3">
             {highlights.map((h) => (
-              <RevealItem key={h.label} className="bg-surface p-5">
-                <div className="font-display text-3xl font-medium tabular-nums tracking-tight text-ink">
+              <RevealItem key={h.label}>
+                <div className="font-display font-medium leading-none text-ink [font-size:clamp(2.25rem,3vw,2.75rem)]">
                   {h.stat}
                 </div>
-                <div className="mt-2 text-sm leading-snug text-ink-muted">{h.label}</div>
+                <div className="mt-3 text-sm leading-snug text-ink-muted">{h.label}</div>
               </RevealItem>
             ))}
           </RevealGroup>
         </div>
       </div>
 
-      {/* Affiliations — factual organizational contexts. */}
-      <Reveal className="mt-16">
-        <h3 className="font-mono text-2xs uppercase tracking-eyebrow text-ink-faint">
-          Selected affiliations &amp; contexts
-        </h3>
-        <ul className="mt-4 border-t border-line">
+      {/* Affiliations */}
+      <Reveal className="mt-24">
+        <p className="kicker">Selected affiliations</p>
+        <ul className="mt-7 border-t border-line">
           {affiliations.map((a) => {
             const linkable = a.href && !isPlaceholder(a.href)
-            const Row = (
-              <div className="grid grid-cols-1 gap-1 py-5 sm:grid-cols-12 sm:gap-6">
-                <span className="font-display text-lg font-medium tracking-tight text-ink sm:col-span-5">
+            const inner = (
+              <div className="grid grid-cols-1 gap-2 py-7 sm:grid-cols-12 sm:gap-6">
+                <span className="font-display font-medium text-ink [font-size:1.3rem] sm:col-span-5">
                   {a.name}
                 </span>
-                <span className="flex items-center gap-1.5 text-sm text-ink-muted sm:col-span-7">
+                <span className="flex items-center gap-2 text-base leading-relaxed text-ink-muted sm:col-span-7">
                   {a.context}
                   {linkable && (
                     <ArrowUpRight
-                      size={14}
+                      size={15}
                       className="text-ink-faint transition-transform duration-250 ease-premium group-hover/aff:translate-x-0.5 group-hover/aff:text-accent"
                     />
                   )}
@@ -101,12 +70,12 @@ export function About() {
                     href={a.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/aff block transition-colors duration-250 hover:bg-surface/50"
+                    className="group/aff block transition-colors duration-250 hover:bg-surface/40"
                   >
-                    {Row}
+                    {inner}
                   </a>
                 ) : (
-                  Row
+                  inner
                 )}
               </li>
             )
