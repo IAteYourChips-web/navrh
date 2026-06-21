@@ -1,26 +1,23 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { Container } from './layout/Container'
-import { NodeNetwork } from './background/NodeNetwork'
+import { HeroBackdrop } from './hero/HeroBackdrop'
+import { SplitText } from './ui/SplitText'
 import { Button } from './ui/Button'
 import { cta, site } from '../data/content'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-export function Hero() {
+export function Hero({ introDone }: { introDone: boolean }) {
   const reduce = useReducedMotion()
 
   const container: Variants = {
     hidden: {},
-    show: { transition: { staggerChildren: reduce ? 0 : 0.08, delayChildren: 0.1 } },
+    show: { transition: { staggerChildren: reduce ? 0 : 0.08, delayChildren: 0.05 } },
   }
   const line: Variants = {
     hidden: { y: reduce ? 0 : '110%' },
     show: { y: 0, transition: { duration: 0.6, ease: EASE } },
-  }
-  const eyebrow: Variants = {
-    hidden: { opacity: 0, letterSpacing: reduce ? '0.18em' : '0.3em' },
-    show: { opacity: 1, letterSpacing: '0.18em', transition: { duration: 0.7, ease: EASE } },
   }
   const fade: Variants = {
     hidden: { opacity: 0, y: reduce ? 0 : 14 },
@@ -29,42 +26,58 @@ export function Hero() {
 
   return (
     <section id="hero" className="relative flex min-h-[92svh] items-center overflow-hidden pt-14">
-      <NodeNetwork />
-      {/* Faint top glow to seat the hero. */}
+      <HeroBackdrop />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line-strong to-transparent" />
 
       <Container className="relative z-10">
         <motion.div
+          data-hero-lift
           className="max-w-3xl"
           variants={container}
-          initial={reduce ? false : 'hidden'}
-          animate="show"
+          initial="hidden"
+          animate={introDone ? 'show' : 'hidden'}
         >
+          {/* Eyebrow — cross-dissolves engineering→strategy during the pinned beat. */}
           <motion.p
-            variants={eyebrow}
-            className="font-mono text-2xs uppercase tracking-eyebrow text-accent"
+            variants={fade}
+            className="relative inline-block font-mono text-2xs uppercase tracking-eyebrow text-accent"
           >
-            <span className="text-ink-faint">//</span> Cyber Resilience · AI Safety
+            <span data-eyebrow-threat>
+              <span className="text-ink-faint">//</span> Cyber Resilience · AI Safety
+            </span>
+            <span
+              data-eyebrow-trust
+              className="absolute left-0 top-0 whitespace-nowrap opacity-0"
+              aria-hidden="true"
+            >
+              <span className="text-ink-faint">//</span> Engineering → Strategy
+            </span>
           </motion.p>
 
-          <h1 className="mt-7 font-display font-semibold tracking-tightest text-ink">
-            <span className="mask-clip">
-              <motion.span variants={line} className="block text-5xl leading-[0.98] sm:text-6xl lg:text-7xl">
-                {site.name}
-              </motion.span>
-            </span>
-          </h1>
+          <SplitText
+            as="h1"
+            variant="chars"
+            immediate
+            play={introDone}
+            className="mt-7 block font-display font-semibold leading-[0.95] tracking-tightest text-ink text-[clamp(2.75rem,8vw,5.375rem)]"
+          >
+            {site.name}
+          </SplitText>
 
           <div className="mt-5 font-display text-2xl font-medium leading-tight tracking-tighter text-ink-muted sm:text-3xl">
             <span className="mask-clip">
-              <motion.span variants={line} className="block">
+              <motion.span variants={line} className="block text-balance">
                 Cyber resilience &amp; AI safety —
               </motion.span>
             </span>
             <span className="mask-clip">
-              <motion.span variants={line} className="block text-ink">
-                from engineering to{' '}
-                <span className="text-gradient-accent">strategy</span>.
+              <motion.span variants={line} className="relative block text-ink">
+                from engineering to <span className="text-gradient-accent">strategy</span>.
+                <span
+                  data-thesis-underline
+                  aria-hidden="true"
+                  className="absolute -bottom-1.5 left-0 h-px w-full max-w-[14ch] origin-left scale-x-0 bg-accent"
+                />
               </motion.span>
             </span>
           </div>
@@ -94,14 +107,13 @@ export function Hero() {
         </motion.div>
       </Container>
 
-      {/* Minimal scroll indicator */}
       <motion.a
         href="#about"
         aria-label="Scroll to content"
         className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-ink-faint transition-colors hover:text-ink-muted md:flex"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
+        animate={{ opacity: introDone ? 1 : 0 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
       >
         <span className="font-mono text-2xs tracking-eyebrow">SCROLL</span>
         <motion.span

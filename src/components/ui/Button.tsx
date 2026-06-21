@@ -56,8 +56,8 @@ export function Button({
     const rect = ref.current.getBoundingClientRect()
     const dx = e.clientX - (rect.left + rect.width / 2)
     const dy = e.clientY - (rect.top + rect.height / 2)
-    mx.set(Math.max(-7, Math.min(7, dx * 0.25)))
-    my.set(Math.max(-5, Math.min(5, dy * 0.25)))
+    mx.set(Math.max(-6, Math.min(6, dx * 0.25)))
+    my.set(Math.max(-6, Math.min(6, dy * 0.25)))
   }
   const onLeave = () => {
     mx.set(0)
