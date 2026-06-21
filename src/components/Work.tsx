@@ -174,7 +174,7 @@ export function Work() {
       id="work"
       eyebrow="TYPE: TALKS · PANELS · WRITING"
       title="Selected work"
-      intro="Public talks, panels, and writing on cyber resilience, ransomware, and the responsible adoption of AI."
+      intro="Talks, panels, and writing I've given on cyber resilience, ransomware, and the responsible adoption of AI."
     >
       {featured && (
         <Reveal className="mb-4">

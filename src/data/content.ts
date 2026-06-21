@@ -2,6 +2,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  *  SINGLE SOURCE OF TRUTH — all real site content lives here.
  *  Edit this file (and only this file) to update copy, links, talks, etc.
+ *  Voice: first person ("I", "my").
  *
  *  Anything not publicly known is written as "[PLACEHOLDER: …]". Search this
  *  file for "PLACEHOLDER" to find everything that still needs your input.
@@ -36,11 +37,11 @@ export interface SiteMeta {
   credential: string
   /** Professional positioning / tagline. */
   tagline: string
-  /** One-line value statement for the hero. */
+  /** One-line value statement for the hero (first person). */
   valueStatement: string
-  /** Short, website-safe bio. */
+  /** Short, website-safe bio (first person). */
   shortBio: string
-  /** Longer, website-safe bio (paragraphs). */
+  /** Longer, website-safe bio (first person paragraphs). */
   longBio: string[]
   /** Contact email for the mailto: CTA. */
   email: string
@@ -58,16 +59,16 @@ export const site: SiteMeta = {
   valueStatement:
     'I help organizations defend against modern cyber threats and adopt AI responsibly — bridging security engineering, resilience, and strategy.',
   shortBio:
-    'Petr Hummel is a cybersecurity, cyber resilience, and AI safety professional focused on responsible AI adoption, security strategy, and the practical defense of organizations against modern cyber threats. His recent public work connects ransomware, cybercriminal ecosystems, generative-AI abuse, critical infrastructure, EU AI Act, NIS2, CRA, and secure AI governance.',
+    "I'm a cybersecurity, cyber resilience, and AI safety professional focused on responsible AI adoption, security strategy, and the practical defense of organizations against modern cyber threats. My recent public work connects ransomware, cybercriminal ecosystems, generative-AI abuse, critical infrastructure, EU AI Act, NIS2, CRA, and secure AI governance.",
   longBio: [
-    'Petr Hummel works at the intersection of cyber resilience, AI safety, and strategic information security. His recent public profile focuses on the shift from technical security engineering toward responsible governance of high-impact technologies, especially generative AI.',
-    'In 2026 he appeared across several public professional and educational contexts — from safe AI for critical infrastructure and the technical reality of ransomware, to AI-enabled extortion and the responsible use of generative AI in environments where trust and reliability are essential.',
-    'A consistent theme runs through this work: cybersecurity is no longer only a technical discipline. It is also a matter of resilience, governance, human judgment, ethics, legal responsibility, and trust — and human oversight remains essential when powerful systems are deployed in real organizations.',
+    'I work at the intersection of cyber resilience, AI safety, and strategic information security. My recent focus is the shift from technical security engineering toward responsible governance of high-impact technologies — especially generative AI.',
+    'In 2026 I spoke across several public professional and educational contexts — from safe AI for critical infrastructure and the technical reality of ransomware, to AI-enabled extortion and the responsible use of generative AI in environments where trust and reliability are essential.',
+    "One theme runs through my work: cybersecurity is no longer only a technical discipline. It's also a matter of resilience, governance, human judgment, ethics, legal responsibility, and trust — and human oversight stays essential when powerful systems are deployed in real organizations.",
   ],
   email: '[PLACEHOLDER: contact email]',
   ogImage: '/og.png',
   description:
-    'Petr Hummel — cybersecurity, cyber resilience and AI safety professional. Responsible AI adoption, security strategy, ransomware defense, and AI governance.',
+    'Petr Hummel — I work on cybersecurity, cyber resilience, and AI safety: responsible AI adoption, security strategy, ransomware defense, and AI governance.',
 }
 
 // ── Social / contact links ─────────────────────────────────────────────────
@@ -111,8 +112,8 @@ export interface Highlight {
 
 /** Only facts that are publicly attested. */
 export const highlights: Highlight[] = [
-  { stat: '2026', label: 'Speaker across national security & AI forums' },
-  { stat: '200+', label: 'Students reached on ransomware reality at FEL ČVUT' },
+  { stat: '2026', label: 'I speak across national security & AI forums' },
+  { stat: '200+', label: 'Students I reached on ransomware reality at FEL ČVUT' },
   { stat: 'EU', label: 'AI Act · NIS2 · CRA in practice' },
 ]
 
@@ -138,20 +139,20 @@ export interface Affiliation {
 export const affiliations: Affiliation[] = [
   {
     name: 'MSD Czech Republic',
-    context: 'Speaker on safe and responsible AI for critical environments.',
+    context: 'I speak on safe and responsible AI for critical environments.',
   },
   {
     name: 'ABsec / ABSEC s.r.o.',
-    context: 'Security solutions around AppGuard — Official AppGuard Reseller for Europe.',
+    context: 'I work on security solutions around AppGuard — the official AppGuard reseller for Europe.',
     href: '[PLACEHOLDER: ABsec website URL]',
   },
   {
     name: 'Czech Technical University — FEL ČVUT / NetAcad',
-    context: 'Guest speaker, “Cyberspace on the Edge of the Law”.',
+    context: 'I guest-lectured, “Cyberspace on the Edge of the Law”.',
   },
   {
     name: 'Czech Electrical and Electronic Association',
-    context: 'Invited speaker, 2026 General Meeting.',
+    context: 'I was an invited speaker at the 2026 General Meeting.',
   },
 ]
 
@@ -168,7 +169,7 @@ export const focusGroups: FocusGroup[] = [
   {
     title: 'Cyber Resilience',
     icon: 'shield',
-    blurb: 'Keeping high-reliability organizations standing under pressure.',
+    blurb: 'I keep high-reliability organizations standing under pressure.',
     items: [
       'Cyber resilience',
       'Security strategy',
@@ -181,7 +182,7 @@ export const focusGroups: FocusGroup[] = [
   {
     title: 'AI Safety & Governance',
     icon: 'brain',
-    blurb: 'Adopting AI without surrendering oversight or trust.',
+    blurb: 'I help organizations adopt AI without surrendering oversight or trust.',
     items: [
       'AI safety',
       'Responsible AI',
@@ -194,7 +195,7 @@ export const focusGroups: FocusGroup[] = [
   {
     title: 'Threat Landscape',
     icon: 'radar',
-    blurb: 'Reading how attackers — and their tools — actually operate.',
+    blurb: 'I read how attackers — and their tools — actually operate.',
     items: [
       'Ransomware',
       'Ransomware negotiation',
@@ -208,7 +209,7 @@ export const focusGroups: FocusGroup[] = [
   {
     title: 'Regulation & Frameworks',
     icon: 'scale',
-    blurb: 'Turning European obligations into operating reality.',
+    blurb: 'I turn European obligations into operating reality.',
     items: ['EU AI Act', 'NIS2', 'CRA'],
   },
 ]
@@ -250,7 +251,7 @@ export const work: WorkItem[] = [
     venue: 'Prague Cyber Security Conference',
     date: '2026', // [PLACEHOLDER: exact conference date]
     description:
-      'A session on the evolving AI threat landscape, secure adoption, and practical approaches to responsible generative AI — balancing innovation with security, resilience, and trust where reliability is essential.',
+      'I cover the evolving AI threat landscape, secure adoption, and practical approaches to responsible generative AI — balancing innovation with security, resilience, and trust where reliability is essential.',
     tags: ['Generative AI', 'Critical Infrastructure', 'Secure Adoption', 'Responsible AI'],
     collaborators: ['Eva Telecka', 'Lukas Marsik'],
     org: 'MSD Czech Republic',
@@ -265,7 +266,7 @@ export const work: WorkItem[] = [
     venue: 'AMPER Stage 2026',
     date: '17 Mar 2026',
     description:
-      'A practical look at tomorrow’s cyber threats: the anatomy of ransomware attacks and authentic communication with extortionists, then the leap to generative-AI abuse, autonomous attack tools, and hidden control of corporate assistants. Part of “Cybersecurity as a condition for survival”.',
+      'A practical look at tomorrow’s cyber threats: I walk from the anatomy of ransomware attacks and authentic communication with extortionists to generative-AI abuse, autonomous attack tools, and hidden control of corporate assistants. Part of “Cybersecurity as a condition for survival”.',
     tags: ['Ransomware', 'Negotiation', 'Generative-AI Abuse', 'Autonomous Agents'],
     org: 'ABsec',
     link: '[PLACEHOLDER: link to talk / event page]',
@@ -278,7 +279,7 @@ export const work: WorkItem[] = [
     venue: 'FEL ČVUT / NetAcad',
     date: '12 Feb 2026',
     description:
-      'Explaining the technical background and real-world impact of ransomware attacks to students, framing cybersecurity as a legal, ethical, human, and technical subject — not only a technical discipline.',
+      'I explain the technical background and real-world impact of ransomware attacks to students, framing cybersecurity as a legal, ethical, human, and technical subject — not only a technical discipline.',
     tags: ['Ransomware', 'Cybercrime', 'Education'],
     metric: '200+ students',
     link: '[PLACEHOLDER: link to talk / event page]',
@@ -292,7 +293,7 @@ export const work: WorkItem[] = [
     date: '28 May 2026',
     location: 'Mikulov',
     description:
-      'An invited talk on AI-enabled social engineering and extortion — executive risk and the practical business consequences of AI abuse.',
+      'My invited talk on AI-enabled social engineering and extortion — executive risk and the practical business consequences of AI abuse.',
     tags: ['AI-enabled Extortion', 'Social Engineering', 'Executive Risk'],
     org: 'ABSEC s.r.o.',
     link: '[PLACEHOLDER: link to talk / event page]',
@@ -305,7 +306,7 @@ export const work: WorkItem[] = [
     venue: 'MSD Czech Republic',
     date: 'Jun 2026',
     description:
-      'Panel on everyday habits for responsible AI use: treat AI as a thinking partner rather than a decision-maker, verify outputs, ask what is missing, challenge answers with another model, weigh impact before building, and critique your own result.',
+      'I join a panel on everyday habits for responsible AI: treating AI as a thinking partner rather than a decision-maker, verifying outputs, asking what is missing, challenging answers with another model, weighing impact before building, and critiquing my own result.',
     tags: ['Responsible AI', 'Human Oversight', 'AI Governance'],
     org: 'MSD Czech Republic',
     link: '[PLACEHOLDER: link to talk / event page]',
@@ -318,7 +319,7 @@ export const work: WorkItem[] = [
     venue: 'Essay · LinkedIn',
     date: '2026',
     description:
-      'Connecting AI safety, governance, and cyber resilience with philosophy of mind: a baby never starts from zero — it inherits evolutionary priors, reflexes, and sensory structure — while a robot begins from random weights. Does intelligence come from architecture, iteration, or their interaction?',
+      'I connect AI safety, governance, and cyber resilience with philosophy of mind: a baby never starts from zero — it inherits evolutionary priors, reflexes, and sensory structure — while a robot begins from random weights. Does intelligence come from architecture, iteration, or their interaction?',
     tags: ['AI Safety', 'Philosophy of Mind', 'MobiusMind'],
     link: '[PLACEHOLDER: canonical title + URL of the LinkedIn essay]',
   },
@@ -343,7 +344,7 @@ export const timeline: TimelineEntry[] = [
     title: 'Kyberprostor na hraně zákona',
     venue: 'FEL ČVUT / NetAcad',
     summary:
-      'Spoke on ransomware and criminal ecosystems to 200+ secondary-school students, framing cybersecurity as legal, ethical, human, and technical.',
+      'I spoke on ransomware and criminal ecosystems to 200+ secondary-school students, framing cybersecurity as legal, ethical, human, and technical.',
   },
   {
     sort: 20260317,
@@ -351,7 +352,7 @@ export const timeline: TimelineEntry[] = [
     title: 'From Ransomware Negotiation to AI Abuse',
     venue: 'AMPER Stage 2026',
     summary:
-      'A practical view of tomorrow’s threats — ransomware negotiation through to generative-AI abuse and autonomous attack tools. Listed with ABsec.',
+      'I gave a practical view of tomorrow’s threats — from ransomware negotiation to generative-AI abuse and autonomous attack tools. Listed with ABsec.',
   },
   {
     sort: 20260528,
@@ -360,7 +361,7 @@ export const timeline: TimelineEntry[] = [
     venue: 'Czech Electrical & Electronic Association — General Meeting',
     location: 'Mikulov',
     summary:
-      'Invited talk on AI-enabled extortion and executive risk. Listed with ABSEC s.r.o.',
+      'I gave an invited talk on AI-enabled extortion and executive risk. Listed with ABSEC s.r.o.',
   },
   {
     sort: 20260601,
@@ -368,7 +369,7 @@ export const timeline: TimelineEntry[] = [
     title: 'Responsible AI Roadshow',
     venue: 'MSD Czech Republic',
     summary:
-      'Panel speaker on practical habits for responsible AI use and human oversight.',
+      'I joined the panel on practical habits for responsible AI use and human oversight.',
   },
 ]
 

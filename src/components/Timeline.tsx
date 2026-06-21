@@ -32,7 +32,7 @@ export function Timeline() {
       id="timeline"
       eyebrow="WINDOW: 2026"
       title="2026 — speaking & appearances"
-      intro="A year of public talks across security conferences, industry stages, and the academy."
+      intro="A year of talks I gave across security conferences, industry stages, and the academy."
     >
       <ol className="relative">
         {/* Spine */}

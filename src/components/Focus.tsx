@@ -8,8 +8,8 @@ export function Focus() {
     <Section
       id="focus"
       eyebrow="TYPE: DOMAINS · FRAMEWORKS"
-      title="Focus areas"
-      intro="Where the work concentrates — from resilience and AI safety to the threat landscape and the European regulatory frame."
+      title="Where I focus"
+      intro="From cyber resilience and AI safety to the threat landscape and the European regulatory frame — where I concentrate."
     >
       <RevealGroup className="border-b border-line">
         {focusGroups.map((g, i) => (

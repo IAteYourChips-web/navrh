@@ -39,7 +39,7 @@ export function About() {
     <Section
       id="about"
       eyebrow="FOCUS: AI SAFETY · CYBER RESILIENCE"
-      title="Security is no longer only a technical discipline."
+      title="I treat security as more than a technical discipline."
     >
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
         <Reveal className="lg:col-span-5">

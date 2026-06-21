@@ -18,7 +18,7 @@ export function Contact() {
             Get in touch
           </p>
           <h2 className="mx-auto mt-6 max-w-2xl text-balance font-display text-3xl font-medium leading-tight tracking-tighter text-ink md:text-4xl">
-            Open to speaking, advisory, and collaboration on cyber resilience and safe AI.
+            I’m open to speaking, advisory, and collaboration on cyber resilience and safe AI.
           </h2>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
