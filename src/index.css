@@ -6,12 +6,12 @@
   :root {
     --ease-signal: cubic-bezier(0.16, 1, 0.3, 1);
     color-scheme: dark;
+    font-optical-sizing: auto;
   }
 
   html {
     scroll-behavior: smooth;
-    /* Offset anchored sections below the sticky nav. */
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -30,26 +30,32 @@
 
   body {
     @apply bg-bg text-ink font-sans antialiased;
-    font-feature-settings: 'cv05' 1, 'ss01' 1;
     text-rendering: optimizeLegibility;
   }
 
-  /* On-brand, never-removed focus state. */
+  /* Fraunces display — high-contrast alternates, hard terminals, optical sizing. */
+  .font-display,
+  h1,
+  h2,
+  h3 {
+    font-optical-sizing: auto;
+    font-feature-settings: 'ss01' 1;
+    font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  }
+
   :focus-visible {
     outline: 2px solid theme('colors.accent.DEFAULT');
-    outline-offset: 2px;
+    outline-offset: 3px;
     border-radius: 2px;
   }
 
   ::selection {
-    background: rgba(91, 140, 255, 0.28);
-    color: #ffffff;
+    background: rgba(91, 140, 255, 0.26);
+    color: #fff;
   }
 
-  /* Quiet, on-theme scrollbar (progressive enhancement only). */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 11px;
   }
   ::-webkit-scrollbar-track {
     background: #07080c;
@@ -57,7 +63,7 @@
   ::-webkit-scrollbar-thumb {
     background: #1c1f2b;
     border-radius: 9999px;
-    border: 2px solid #07080c;
+    border: 3px solid #07080c;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #262a38;
@@ -65,8 +71,7 @@
 }
 
 @layer components {
-  /* Surface panel lit by a single off-screen source at the top-right.
-     Static — no animation. The top hairline brightens toward the right. */
+  /* Surface panel lit by one off-screen source at top-right (static). */
   .panel {
     @apply relative rounded-xl border border-line bg-surface-2;
   }
@@ -84,17 +89,23 @@
     pointer-events: none;
   }
 
-  /* Mono technical chip. */
-  .chip {
-    @apply inline-flex items-center rounded-sm border border-line bg-surface/60 px-2.5 py-1
-           font-mono text-2xs uppercase tracking-eyebrow text-ink-muted;
+  /* Editorial uppercase kicker with a leading accent tick — replaces "//". */
+  .kicker {
+    @apply inline-flex items-center gap-3 font-sans text-2xs font-medium uppercase tracking-eyebrow text-ink-faint;
+  }
+  .kicker::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: theme('colors.accent.DEFAULT');
+    flex: none;
   }
 }
 
 @layer utilities {
-  /* The single permitted violet — the word "Strategy" in the hero. */
+  /* The one permitted violet — gradient stop on the word "strategy". */
   .text-gradient-accent {
-    background-image: linear-gradient(100deg, #5b8cff 0%, #9b7cff 100%);
+    background-image: linear-gradient(105deg, #5b8cff 0%, #9b7cff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -107,9 +118,24 @@
     text-wrap: pretty;
   }
 
-  /* Mask wrapper for per-line reveal. */
-  .mask-clip {
-    overflow: hidden;
-    display: block;
+  /* Film grain — printed-page texture; sits over the dark canvas, below text. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* Single ambient light source, top-right. */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(55% 45% at 100% 0%, rgba(91, 140, 255, 0.07), transparent 62%);
   }
 }
