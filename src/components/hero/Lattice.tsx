@@ -48,6 +48,7 @@ export default function Lattice({ count }: { count: number }) {
   const group = useRef<THREE.Group>(null)
   const mat = useRef<THREE.ShaderMaterial>(null)
   const lineMat = useRef<THREE.LineBasicMaterial>(null)
+  const progress = useRef(0)
   const { gl } = useThree()
   const data = useMemo(() => buildLattice(count), [count])
 
@@ -65,16 +66,19 @@ export default function Lattice({ count }: { count: number }) {
 
   useFrame((_, delta) => {
     const d = Math.min(delta, 0.05)
+    // Gently assemble scatter -> resolved lattice once on load, then hold.
+    progress.current += (1 - progress.current) * Math.min(1, d * 0.55)
+    const p = progress.current
     const m = mat.current
     if (m) {
       m.uniforms.uTime.value += d
-      m.uniforms.uProgress.value = heroState.progress
+      m.uniforms.uProgress.value = p
       const v = m.uniforms.uPointer.value as THREE.Vector2
       v.x += (heroState.pointerX - v.x) * 0.06
       v.y += (heroState.pointerY - v.y) * 0.06
     }
     if (lineMat.current) {
-      lineMat.current.opacity = 0.16 * THREE.MathUtils.smoothstep(heroState.progress, 0.6, 1.0)
+      lineMat.current.opacity = 0.18 * THREE.MathUtils.smoothstep(p, 0.5, 1.0)
     }
     const g = group.current
     if (g) {

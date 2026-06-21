@@ -1,31 +1,30 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react'
-import { NodeNetwork } from '../background/NodeNetwork'
 import { useFx } from '../../hooks/useFx'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { heroState } from './heroState'
 import { cn } from '../../lib/cn'
 
-// Lazy boundary — three + R3F live entirely inside this chunk and never load
-// on the critical path, on mobile/touch, on weak hardware, or under reduced motion.
+// three + R3F live entirely in this lazy chunk — never on the critical path,
+// never on mobile/touch/weak hardware or under reduced motion.
 const LatticeCanvas = lazy(() => import('./LatticeCanvas'))
 
-const VIGNETTE = 'radial-gradient(120% 95% at 78% 18%, transparent 0%, #07080C 70%)'
+const CIRCLE_MASK = 'radial-gradient(closest-side, #000 58%, transparent 100%)'
 
 /**
- * Hero backdrop: the 2D node SVG is first paint and the permanent fallback;
- * the 3D lattice fades in over it only when the device can carry it.
+ * The one WebGL accent: a slow-drifting node lattice masked to a circle behind
+ * the hero portrait. A static glow ring is the default; the canvas is pure
+ * enhancement on capable desktops.
  */
 export function HeroBackdrop() {
   const fx = useFx()
+  const wide = useMediaQuery('(min-width: 768px)')
   const ref = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(true)
   const [canvasUp, setCanvasUp] = useState(false)
 
-  // Derived: mount the 3D only on a capable desktop while the hero is in view.
-  // Leaving the hero unmounts it and frees the GPU.
-  const mount = fx.allowHeavy && inView
+  const mount = fx.allowHeavy && inView && wide
   const showCanvas = mount && canvasUp
 
-  // Pointer → heroState (desktop only). No React state, no re-renders.
   useEffect(() => {
     if (!fx.fine || fx.reduce) return
     const onMove = (e: PointerEvent) => {
@@ -36,38 +35,33 @@ export function HeroBackdrop() {
     return () => window.removeEventListener('pointermove', onMove)
   }, [fx.fine, fx.reduce])
 
-  // Pause the canvas render loop when the hero scrolls away.
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), {
-      rootMargin: '200px',
-    })
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: '200px' })
     io.observe(el)
     return () => io.disconnect()
   }, [])
 
   return (
-    <div ref={ref} aria-hidden="true" className="absolute inset-0 overflow-hidden">
+    <div ref={ref} aria-hidden="true" className="absolute inset-0">
+      {/* Static fallback: soft glow ring (also the base under the canvas). */}
       <div
-        className={cn(
-          'absolute inset-0 transition-opacity duration-700 ease-premium',
-          showCanvas ? 'opacity-0' : 'opacity-100',
-        )}
-      >
-        <NodeNetwork />
-      </div>
+        className="absolute inset-0"
+        style={{ background: 'radial-gradient(closest-side, rgba(91,140,255,0.10), transparent 76%)' }}
+      />
+      <div className="absolute inset-[14%] rounded-full border border-accent/10" />
 
       {mount && (
         <Suspense fallback={null}>
           <div
             className={cn(
               'absolute inset-0 transition-opacity duration-700 ease-premium',
-              canvasUp ? 'opacity-100' : 'opacity-0',
+              showCanvas ? 'opacity-[0.45]' : 'opacity-0',
             )}
+            style={{ maskImage: CIRCLE_MASK, WebkitMaskImage: CIRCLE_MASK }}
           >
-            <LatticeCanvas count={1800} active={inView} onReady={() => setCanvasUp(true)} />
-            <div className="pointer-events-none absolute inset-0" style={{ background: VIGNETTE }} />
+            <LatticeCanvas count={1400} active={inView} onReady={() => setCanvasUp(true)} />
           </div>
         </Suspense>
       )}

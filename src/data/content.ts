@@ -117,19 +117,6 @@ export const highlights: Highlight[] = [
   { stat: 'EU', label: 'AI Act · NIS2 · CRA in practice' },
 ]
 
-/** Mono "operator card" rows — attested themes only, never fabricated telemetry. */
-export interface ProfileMetaRow {
-  key: string
-  value: string
-}
-
-export const profileMeta: ProfileMetaRow[] = [
-  { key: 'FOCUS', value: 'AI Safety · Cyber Resilience' },
-  { key: 'PRACTICE', value: 'Security Strategy · Governance' },
-  { key: 'REGION', value: 'Czechia · EU' },
-  { key: 'FRAMEWORKS', value: 'EU AI Act · NIS2 · CRA' },
-]
-
 export interface Affiliation {
   name: string
   context: string

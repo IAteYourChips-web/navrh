@@ -1,40 +1,34 @@
 import {
   Fragment,
-  useEffect,
-  useRef,
   type ComponentType,
   type ElementType,
   type HTMLAttributes,
   type PropsWithChildren,
   type ReactNode,
-  type Ref,
 } from 'react'
-import { useReducedMotion } from 'framer-motion'
-import { gsap } from '../../lib/gsap'
+import { motion, useReducedMotion, type Variants } from 'framer-motion'
+
+const EASE = [0.16, 1, 0.3, 1] as const
 
 interface SplitTextProps {
   children: string
   as?: ElementType
   className?: string
-  /** 'chars' = per-character flip (hero moment); 'lines' = per-word rise (headings). */
+  /** 'chars' = per-character (hero name); 'lines' = per-word (headings). */
   variant?: 'chars' | 'lines'
-  /** Per-unit stagger (s). */
   stagger?: number
-  /** Initial delay (s). */
   delay?: number
-  /** Play immediately on mount instead of on scroll into view. */
+  /** Play on mount instead of on scroll into view. */
   immediate?: boolean
-  /** For immediate mode: hold hidden until this is true (sync with the intro). */
+  /** For immediate mode: hold hidden until true (sync with the intro). */
   play?: boolean
-  /** Optional trailing node (e.g. an accent-gradient word) rendered after. */
   trailing?: ReactNode
 }
 
 /**
- * Kinetic split-text reveal. 'chars' flips characters up (the hero name);
- * 'lines' rises words (section headings — per-char there reads carnival).
- * Accessible: the element exposes full text via aria-label, split spans are
- * aria-hidden. Under reduced motion it renders plain, instant text.
+ * Kinetic split-text reveal built on Framer Motion. Accessible: the element
+ * exposes its full text via aria-label and the split spans are aria-hidden.
+ * Plain, instant text under reduced motion.
  */
 export function SplitText({
   children,
@@ -47,58 +41,9 @@ export function SplitText({
   play = true,
   trailing,
 }: SplitTextProps) {
-  type TagProps = PropsWithChildren<HTMLAttributes<HTMLElement> & { ref?: Ref<HTMLElement> }>
+  type TagProps = PropsWithChildren<HTMLAttributes<HTMLElement>>
   const Tag = (as ?? 'span') as unknown as ComponentType<TagProps>
   const reduce = useReducedMotion()
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    if (reduce || !ref.current) return
-    const sel = variant === 'chars' ? '[data-char]' : '[data-word]'
-    const units = ref.current.querySelectorAll<HTMLElement>(sel)
-    if (!units.length) return
-
-    const ctx = gsap.context(() => {
-      // Immediate reveals can be held hidden until the intro hands off.
-      if (immediate && !play) {
-        gsap.set(
-          units,
-          variant === 'chars'
-            ? { yPercent: 100, opacity: 0, rotateX: -70, transformPerspective: 600, transformOrigin: '50% 100%' }
-            : { yPercent: 60, opacity: 0 },
-        )
-        return
-      }
-      const trigger = immediate
-        ? {}
-        : { scrollTrigger: { trigger: ref.current, start: 'top 82%', once: true } }
-      if (variant === 'chars') {
-        gsap.set(units, { transformPerspective: 600 })
-        gsap.from(units, {
-          yPercent: 100,
-          opacity: 0,
-          rotateX: -70,
-          transformOrigin: '50% 100%',
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: stagger ?? 0.022,
-          delay,
-          ...trigger,
-        })
-      } else {
-        gsap.from(units, {
-          yPercent: 60,
-          opacity: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: stagger ?? 0.07,
-          delay,
-          ...trigger,
-        })
-      }
-    }, ref)
-    return () => ctx.revert()
-  }, [reduce, variant, stagger, delay, immediate, play])
 
   if (reduce) {
     return (
@@ -109,29 +54,62 @@ export function SplitText({
     )
   }
 
+  const container: Variants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: stagger ?? (variant === 'chars' ? 0.02 : 0.06),
+        delayChildren: delay,
+      },
+    },
+  }
+  const charV: Variants = {
+    hidden: { opacity: 0, y: '45%', rotateX: -55 },
+    show: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.65, ease: EASE } },
+  }
+  const wordV: Variants = {
+    hidden: { opacity: 0, y: '60%' },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+  }
+
+  const animateProps = immediate
+    ? { animate: play ? ('show' as const) : ('hidden' as const) }
+    : { whileInView: 'show' as const, viewport: { once: true, margin: '-12% 0px' } }
+
   const words = children.split(' ')
+
   return (
-    <Tag ref={ref} className={className} aria-label={children}>
-      <span aria-hidden="true">
+    <Tag className={className} aria-label={children}>
+      <motion.span
+        aria-hidden="true"
+        className="inline"
+        variants={container}
+        initial="hidden"
+        {...animateProps}
+      >
         {words.map((word, wi) => (
           <Fragment key={wi}>
-            <span className="inline-block whitespace-nowrap">
+            <span className="inline-block whitespace-nowrap" style={{ perspective: 600 }}>
               {variant === 'lines' ? (
-                <span data-word className="inline-block will-change-transform">
+                <motion.span variants={wordV} className="inline-block will-change-transform">
                   {word}
-                </span>
+                </motion.span>
               ) : (
                 Array.from(word).map((ch, ci) => (
-                  <span key={ci} data-char className="inline-block will-change-transform">
+                  <motion.span
+                    key={ci}
+                    variants={charV}
+                    className="inline-block will-change-transform"
+                  >
                     {ch}
-                  </span>
+                  </motion.span>
                 ))
               )}
             </span>
             {wi < words.length - 1 ? ' ' : ''}
           </Fragment>
         ))}
-      </span>
+      </motion.span>
       {trailing}
     </Tag>
   )
